@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Document</title>
+
+    <!-- Bootstrap CSS -->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+        rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fa;
+        }
+        .card {
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .btn-primary, .btn-success, .btn-outline-secondary {
+            border-radius: 8px;
+        }
+        .success-box {
+            background: #e6ffe6;
+            padding: 12px;
+            border-left: 4px solid #28a745;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                <div class="card shadow">
+                    <h3 class="text-center mb-3">🔐 Document Signing</h3>
+
+                    {% if message %}
+                        <div class="success-box">
+                            <b>{{ message }}</b>
+                        </div>
+                    {% endif %}
+
+                    <form action="/sign" method="POST" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label class="form-label">Select File</label>
+                            <input type="file" class="form-control" name="file" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Hash Algorithm</label>
+                            <select class="form-select" name="algo">
+                                <option value="sha256">SHA-256</option>
+                                <option value="sha512">SHA-512</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Sign Document
+                        </button>
+                    </form>
+
+                    {% if sig_filename %}
+                        <hr>
+                        <p><b>Download Signature File:</b></p>
+                        <a href="/download/{{ sig_filename }}" class="btn btn-success w-100" download>
+                            ⬇ Download .sig.json
+                        </a>
+                    {% endif %}
+
+                    <hr>
+
+                    <!-- 🔍 Direct Verification Option -->
+                    <p class="text-center mb-2"><b>Already have a signature file?</b></p>
+                    <a href="/verify" class="btn btn-outline-secondary w-100">
+                        🔍 Go to Verification Page
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

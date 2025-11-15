@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify Document</title>
+
+    <!-- Bootstrap CSS -->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+        rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fa;
+        }
+        .card {
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .btn-primary {
+            border-radius: 8px;
+        }
+        .result-box {
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .success {
+            background: #e6ffe6;
+            border-left: 4px solid #28a745;
+        }
+        .error {
+            background: #ffe6e6;
+            border-left: 4px solid #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                <div class="card shadow">
+                    <h3 class="text-center mb-3">✔ Document Verification</h3>
+
+                    {% if message %}
+                        <div class="result-box {% if 'success' in message.lower() %}success{% else %}error{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+
+                    <form action="/verify" method="POST" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label class="form-label">Select Document</label>
+                            <input type="file" class="form-control" name="file" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Select Signature (.sig.json)</label>
+                            <input type="file" class="form-control" name="sig" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Verify Document
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
